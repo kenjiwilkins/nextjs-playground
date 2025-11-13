@@ -26,14 +26,10 @@ export default function Error({
             {isDevelopment && <span> at Home page</span>}
           </h1>
           <p className="text-muted-foreground">
-            {isDevelopment
-              ? error.message
-              : "An unexpected error occurred. Please try again."}
+            {isDevelopment ? error.message : "An unexpected error occurred. Please try again."}
           </p>
           {isDevelopment && error.digest && (
-            <p className="text-xs text-muted-foreground">
-              Error digest: {error.digest}
-            </p>
+            <p className="text-xs text-muted-foreground">Error digest: {error.digest}</p>
           )}
         </div>
 
@@ -51,9 +47,7 @@ export default function Error({
             <summary className="cursor-pointer text-sm text-muted-foreground hover:text-foreground">
               View error details
             </summary>
-            <pre className="mt-2 overflow-auto rounded-lg bg-muted p-4 text-xs">
-              {error.stack}
-            </pre>
+            <pre className="mt-2 overflow-auto rounded-lg bg-muted p-4 text-xs">{error.stack}</pre>
           </details>
         )}
       </div>

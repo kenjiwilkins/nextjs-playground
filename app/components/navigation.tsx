@@ -5,19 +5,31 @@ export default function Navigation() {
     <nav className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur">
       <div className="mx-auto max-w-4xl px-4 py-4 md:px-8">
         <div className="flex items-center justify-between">
-          <Link href="/" className="text-xl font-bold text-primary hover:text-accent transition-colors">
+          <Link
+            href="/"
+            className="text-xl font-bold text-primary hover:text-accent transition-colors"
+          >
             Kenji Wilkins
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex gap-8">
-            <Link href="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
+            <Link
+              href="/blog"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
               Blog
             </Link>
-            <Link href="/book" className="text-muted-foreground hover:text-foreground transition-colors">
+            <Link
+              href="/book"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
               Bookshelf
             </Link>
-            <Link href="#about" className="text-muted-foreground hover:text-foreground transition-colors">
+            <Link
+              href="#about"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
               About
             </Link>
           </div>

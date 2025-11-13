@@ -72,7 +72,6 @@
   --sidebar-ring: oklch(0.405 0.101 131.063);
 }
 
-
 @theme inline {
   --font-sans: "Noto Sans", "Noto Sans Fallback";
   --font-mono: "JetBrains Mono", "JetBrains Mono Fallback";

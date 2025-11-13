@@ -11,8 +11,7 @@ export default function BookHero() {
               Reading Collection
             </div>
             <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
-              My Digital{" "}
-              <span className="text-primary">Bookshelf</span>
+              My Digital <span className="text-primary">Bookshelf</span>
             </h1>
             <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
               A curated collection of books I&apos;ve read, currently reading, and want to explore.
