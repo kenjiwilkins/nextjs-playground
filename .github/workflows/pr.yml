@@ -49,6 +49,9 @@ jobs:
         run: pnpm run build
         env:
           NODE_ENV: production
+          NOTION_API_KEY: ${{ vars.NOTION_API_KEY }}
+          NOTION_BOOKSHELF_DB_ID: ${{ vars.NOTION_BOOKSHELF_DB_ID }}
+          NOTION_BOOKSHELF_DATA_SOURCE_ID: ${{ vars.NOTION_BOOKSHELF_DATA_SOURCE_ID }}
 
   quality-check:
     name: Code Quality
@@ -90,3 +93,8 @@ jobs:
         run: |
           pnpm run build
           echo "✓ Build completed successfully"
+        env:
+          NODE_ENV: production
+          NOTION_API_KEY: ${{ vars.NOTION_API_KEY }}
+          NOTION_BOOKSHELF_DB_ID: ${{ vars.NOTION_BOOKSHELF_DB_ID }}
+          NOTION_BOOKSHELF_DATA_SOURCE_ID: ${{ vars.NOTION_BOOKSHELF_DATA_SOURCE_ID }}

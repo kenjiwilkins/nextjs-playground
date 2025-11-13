@@ -21,3 +21,53 @@ export function getNotionClient(): Client {
 
   return notionClient
 }
+
+/**
+ * Get the Notion Bookshelf Database ID.
+ */
+export function getNotionBookshelfDbId(): string {
+  const dbId = process.env.NOTION_BOOKSHELF_DB_ID
+
+  if (!dbId) {
+    throw new Error("NOTION_BOOKSHELF_DB_ID is not defined in environment variables")
+  }
+
+  return dbId
+}
+
+/**
+ *  Get the Notion Bookshelf Data Source ID.
+ */
+export function getNotionBookshelfDataSourceId(): string {
+  const dataSourceId = process.env.NOTION_BOOKSHELF_DATA_SOURCE_ID
+
+  if (!dataSourceId) {
+    throw new Error("NOTION_BOOKSHELF_DATA_SOURCE_ID is not defined in environment variables")
+  }
+
+  return dataSourceId
+}
+
+/**
+ * Validate notion configuration.
+ */
+export function validateNotionConfig(): { valid: boolean; errors: string[] } {
+  const errors: string[] = []
+
+  if (!process.env.NOTION_API_KEY) {
+    errors.push("NOTION_API_KEY is not defined in environment variables")
+  }
+
+  if (!process.env.NOTION_BOOKSHELF_DB_ID) {
+    errors.push("NOTION_BOOKSHELF_DB_ID is not defined in environment variables")
+  }
+
+  if (!process.env.NOTION_BOOKSHELF_DATA_SOURCE_ID) {
+    errors.push("NOTION_BOOKSHELF_DATA_SOURCE_ID is not defined in environment variables")
+  }
+
+  return {
+    valid: errors.length === 0,
+    errors,
+  }
+}
