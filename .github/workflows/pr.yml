@@ -77,7 +77,9 @@ jobs:
 
       - name: Check for console statements
         run: |
-          if git diff origin/main --name-only | grep -E '\.(ts|tsx|js|jsx)$' | xargs grep -n 'console\.\(log\|error\|warn\)' 2>/dev/null || true; then
+          CONSOLE_OUTPUT="$(git diff origin/main --name-only | grep -E '\.(ts|tsx|js|jsx)$' | xargs grep -n 'console\.\(log\|error\|warn\)' 2>/dev/null || true)"
+          if [ -n "$CONSOLE_OUTPUT" ]; then
+            echo "$CONSOLE_OUTPUT"
             echo "⚠️  Warning: Found console statements in changed files"
             exit 0
           else
