@@ -14,7 +14,7 @@ export default function Navigation() {
             <Link href="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
               Blog
             </Link>
-            <Link href="/bookshelf" className="text-muted-foreground hover:text-foreground transition-colors">
+            <Link href="/book" className="text-muted-foreground hover:text-foreground transition-colors">
               Bookshelf
             </Link>
             <Link href="#about" className="text-muted-foreground hover:text-foreground transition-colors">
