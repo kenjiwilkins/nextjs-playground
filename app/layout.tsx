@@ -1,27 +1,25 @@
-import type { Metadata } from "next";
-import { ThemeProvider } from "@/components/theme-provider";
-import "./globals.css";
-import { jetBrainsMono, notoSans } from "@/components/ui/fonts";
+import type { Metadata } from "next"
+import { ThemeProvider } from "@/components/theme-provider"
+import "./globals.css"
+import { jetBrainsMono, notoSans } from "@/components/ui/fonts"
 
 export const metadata: Metadata = {
   title: "Kenji Wilkins",
   description: "Frontend developer with 5+ years of experience",
-};
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${jetBrainsMono.variable} ${notoSans.variable} antialiased`}
-      >
+      <body className={`${jetBrainsMono.variable} ${notoSans.variable} antialiased`}>
         <ThemeProvider defaultTheme="system" enableSystem disableTransitionOnChange>
           {children}
         </ThemeProvider>
       </body>
     </html>
-  );
+  )
 }

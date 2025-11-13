@@ -1,6 +1,6 @@
-import ThemeToggle from "@/components/ui/theme-toggle";
-import Hero from "./components/hero";
-import Navigation from "./components/navigation";
+import ThemeToggle from "@/components/ui/theme-toggle"
+import Hero from "./components/hero"
+import Navigation from "./components/navigation"
 
 export default function Home() {
   return (
@@ -9,5 +9,5 @@ export default function Home() {
       <Hero />
       <ThemeToggle />
     </main>
-  );
+  )
 }

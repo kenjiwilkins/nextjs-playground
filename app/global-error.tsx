@@ -22,18 +22,14 @@ export default function GlobalError({
         <div className="flex min-h-screen flex-col items-center justify-center p-4">
           <div className="w-full max-w-md space-y-6 text-center">
             <div className="space-y-2">
-              <h1 className="text-4xl font-bold">
-                Something went wrong
-              </h1>
+              <h1 className="text-4xl font-bold">Something went wrong</h1>
               <p className="text-muted-foreground">
                 {isDevelopment
                   ? error.message
                   : "A critical error occurred. Please refresh the page."}
               </p>
               {isDevelopment && error.digest && (
-                <p className="text-xs text-muted-foreground">
-                  Error digest: {error.digest}
-                </p>
+                <p className="text-xs text-muted-foreground">Error digest: {error.digest}</p>
               )}
             </div>
 
