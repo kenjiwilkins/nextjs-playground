@@ -39,6 +39,9 @@ jobs:
       - name: Run ESLint
         run: pnpm run lint
 
+      - name: Check code formatting
+        run: pnpm run format:check
+
       - name: Type check
         run: pnpm exec tsc --noEmit
 
