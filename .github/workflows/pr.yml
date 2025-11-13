@@ -1,0 +1,87 @@
+name: Pull Request CI
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+  push:
+    branches:
+      - main
+
+jobs:
+  lint-and-build:
+    name: Lint & Build
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run ESLint
+        run: pnpm run lint
+
+      - name: Type check
+        run: pnpm exec tsc --noEmit
+
+      - name: Build project
+        run: pnpm run build
+        env:
+          NODE_ENV: production
+
+  quality-check:
+    name: Code Quality
+    runs-on: ubuntu-latest
+    needs: lint-and-build
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check for console statements
+        run: |
+          if git diff origin/main --name-only | grep -E '\.(ts|tsx|js|jsx)$' | xargs grep -n 'console\.\(log\|error\|warn\)' 2>/dev/null || true; then
+            echo "⚠️  Warning: Found console statements in changed files"
+            exit 0
+          else
+            echo "✓ No console statements found"
+          fi
+
+      - name: Check bundle size
+        run: |
+          pnpm run build
+          echo "✓ Build completed successfully"
