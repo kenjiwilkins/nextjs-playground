@@ -18,8 +18,11 @@ export async function GET() {
     })
   } catch (error) {
     console.error("Error fetching bookshelf books:", error)
-    return NextResponse.json({
-      error: "Failed to fetch bookshelf books",
-    })
+    return NextResponse.json(
+      {
+        error: "Failed to fetch bookshelf books",
+      },
+      { status: 500 }
+    )
   }
 }

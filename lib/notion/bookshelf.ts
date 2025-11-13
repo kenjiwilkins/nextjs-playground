@@ -13,6 +13,5 @@ export async function getBookshelfBooks() {
         direction: "ascending",
       },
     ],
-    page_size: 1,
   })
 }
