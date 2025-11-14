@@ -2,7 +2,7 @@
 
 import { useActionState } from "react"
 import { fetchBooks } from "@/app/book/actions/fetchbooks"
-import { type BookItem, getBookAuthor, getBookTitle } from "@/lib/notion/types"
+import { type BookItem, getBookAuthor, getBookStatus, getBookTitle } from "@/lib/notion/types"
 import {
   Table,
   TableBody,
@@ -13,6 +13,8 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { cn } from "@/lib/utils"
 
 type BooksState = { items: BookItem[]; nextCursor: string | null }
 
@@ -35,6 +37,18 @@ export default function BookTable({ initialProps, nextCursor }: BookTableProps) 
     },
     initialState
   )
+  const handleBadgeColor = (status: string | null) => {
+    switch (status) {
+      case "read":
+        return cn("bg-green-500 text-white")
+      case "reading":
+        return cn("bg-blue-500 text-white")
+      case "unread":
+        return cn("bg-red-500 text-white")
+      default:
+        return cn("bg-gray-500 text-white")
+    }
+  }
 
   return (
     <div className="p-2 sm:p-4 md:p-6 lg:p-8 w-full">
@@ -49,6 +63,7 @@ export default function BookTable({ initialProps, nextCursor }: BookTableProps) 
         </TableCaption>
         <TableHeader>
           <TableRow>
+            <TableHead className="text-muted-foreground">Status</TableHead>
             <TableHead className="text-muted-foreground">Title</TableHead>
             <TableHead className="text-muted-foreground">Author</TableHead>
           </TableRow>
@@ -56,6 +71,11 @@ export default function BookTable({ initialProps, nextCursor }: BookTableProps) 
         <TableBody>
           {state.items.map((book) => (
             <TableRow key={book.id}>
+              <TableCell>
+                <Badge className={handleBadgeColor(getBookStatus(book))}>
+                  {getBookStatus(book) ?? "unknown"}
+                </Badge>
+              </TableCell>
               <TableCell>{getBookTitle(book)}</TableCell>
               <TableCell>{getBookAuthor(book)}</TableCell>
             </TableRow>

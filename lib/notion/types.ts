@@ -9,10 +9,10 @@ const notionTitleSchema = z.object({
   ),
 })
 
-const notionSelectSchema = z.object({
-  select: z
+const notionStatusSchema = z.object({
+  status: z
     .object({
-      name: z.string(),
+      name: z.enum(["read", "unread", "reading"]),
     })
     .nullish(),
 })
@@ -49,7 +49,7 @@ const bookPropertiesSchema = z.object({
       }),
     })
     .optional(),
-  Status: notionSelectSchema.optional(),
+  Status: notionStatusSchema.optional(),
   Date_Read: notionDateSchema.optional(),
   Rollup: notionNumberSchema.optional(),
 })
@@ -86,7 +86,12 @@ export function getBookAuthor(book: BookItem): string | null {
 }
 
 export function getBookStatus(book: BookItem): string | null {
-  return book.properties.Status?.select?.name ?? null
+  try {
+    return book.properties.Status?.status?.name ?? null
+  } catch (error) {
+    console.error(`failed to get book status:${book.id}`, error)
+    return null
+  }
 }
 
 export function getBookDateRead(book: BookItem): string | null {

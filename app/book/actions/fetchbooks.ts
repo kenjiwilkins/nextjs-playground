@@ -25,6 +25,6 @@ export async function fetchBooks(nextCursor?: string): Promise<BooksQueryRespons
     console.error("Failed to parse Notion response:", parsed.error)
     throw new Error("Failed to fetch books from Notion.")
   }
-
+  
   return parsed.data
 }
