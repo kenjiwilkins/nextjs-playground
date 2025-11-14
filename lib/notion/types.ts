@@ -9,17 +9,6 @@ const notionTitleSchema = z.object({
   ),
 })
 
-const notionRichTextSchema = z.object({
-  rich_text: z
-    .array(
-      z.object({
-        plain_text: z.string(),
-      })
-    )
-    .optional()
-    .default([]),
-})
-
 const notionSelectSchema = z.object({
   select: z
     .object({
@@ -43,7 +32,23 @@ const notionNumberSchema = z.object({
 // Book properties schema
 const bookPropertiesSchema = z.object({
   Title: notionTitleSchema,
-  Author_Name: notionRichTextSchema.optional(),
+  Author_Name: z
+    .object({
+      rollup: z.object({
+        type: z.literal("array"),
+        array: z.array(
+          z.object({
+            type: z.literal("title"),
+            title: z.array(
+              z.object({
+                plain_text: z.string(),
+              })
+            ),
+          })
+        ),
+      }),
+    })
+    .optional(),
   Status: notionSelectSchema.optional(),
   Date_Read: notionDateSchema.optional(),
   Rollup: notionNumberSchema.optional(),
@@ -73,8 +78,11 @@ export function getBookTitle(book: BookItem): string {
 }
 
 export function getBookAuthor(book: BookItem): string | null {
-  const richText = book.properties.Author_Name?.rich_text
-  return richText?.[0]?.plain_text ?? null
+  const name = book.properties.Author_Name?.rollup.array[0].title ?? [{ plain_text: "Unknown" }]
+  if (name && name.length > 0) {
+    return name[0].plain_text
+  }
+  return null
 }
 
 export function getBookStatus(book: BookItem): string | null {
