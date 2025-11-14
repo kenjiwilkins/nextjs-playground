@@ -2,7 +2,7 @@
 
 import { useActionState } from "react"
 import { fetchBooks } from "@/app/book/actions/fetchbooks"
-import { type BookItem, getBookAuthor, getBookStatus, getBookTitle } from "@/lib/notion/types"
+import { type BookItem, getBookAuthor, getBookDateRead, getBookStatus, getBookTitle } from "@/lib/notion/types"
 import {
   Table,
   TableBody,
@@ -66,6 +66,7 @@ export default function BookTable({ initialProps, nextCursor }: BookTableProps) 
             <TableHead className="text-muted-foreground">Status</TableHead>
             <TableHead className="text-muted-foreground">Title</TableHead>
             <TableHead className="text-muted-foreground">Author</TableHead>
+            <TableHead className="text-muted-foreground">Date Read</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -78,6 +79,7 @@ export default function BookTable({ initialProps, nextCursor }: BookTableProps) 
               </TableCell>
               <TableCell>{getBookTitle(book)}</TableCell>
               <TableCell>{getBookAuthor(book)}</TableCell>
+              <TableCell>{getBookDateRead(book)}</TableCell>
             </TableRow>
           ))}
         </TableBody>
