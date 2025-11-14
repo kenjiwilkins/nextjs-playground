@@ -16,7 +16,7 @@ export default function KeyVisual() {
       </div>
 
       {/* Square image for mobile/tablet */}
-      <div className="block md:hidden relative w-full aspect-square">
+      <div className="block md:hidden relative w-full h-[20vh]">
         <Image
           src="/bookshelg-bg.png"
           alt="Bookshelf background"
