@@ -22,6 +22,7 @@ import {
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 import { Rating, RatingButton } from "@/components/ui/shadcn-io/rating"
+import Link from "next/link"
 
 type BooksState = { items: BookItem[]; nextCursor: string | null }
 
@@ -85,7 +86,14 @@ export default function BookTable({ initialProps, nextCursor }: BookTableProps) 
                   {getBookStatus(book) ?? "unknown"}
                 </Badge>
               </TableCell>
-              <TableCell>{getBookTitle(book)}</TableCell>
+              <TableCell className="p-0">
+                <Link
+                  href={`/book/${book.id}`}
+                  className="block w-full h-full underline underline-offset-2 decoration-2 font-semibold"
+                >
+                  {getBookTitle(book)}
+                </Link>
+              </TableCell>
               <TableCell>{getBookAuthor(book)}</TableCell>
               <TableCell>{getBookDateRead(book)}</TableCell>
               <TableCell className="flex items-center">
