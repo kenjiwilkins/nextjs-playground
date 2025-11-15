@@ -17,6 +17,14 @@ const notionStatusSchema = z.object({
     .nullish(),
 })
 
+const notionSelectSchemema = z.object({
+  select: z
+    .object({
+      name: z.string(),
+    })
+    .nullish(),
+})
+
 const notionDateSchema = z.object({
   date: z
     .object({
@@ -52,6 +60,7 @@ const bookPropertiesSchema = z.object({
   Status: notionStatusSchema.optional(),
   Date_Read: notionDateSchema.optional(),
   Rollup: notionNumberSchema.optional(),
+  Rate: notionSelectSchemema.optional(),
 })
 
 // Book item schema
@@ -96,6 +105,14 @@ export function getBookStatus(book: BookItem): string | null {
 
 export function getBookDateRead(book: BookItem): string | null {
   return book.properties.Date_Read?.date?.start ?? null
+}
+
+export function getBookRate(book: BookItem): number {
+  const bookRate: string | null = book.properties.Rate?.select?.name ?? null
+  if (bookRate) {
+    return parseInt(bookRate, 10)
+  }
+  return 0
 }
 
 export function getBookRollup(book: BookItem): number | null {

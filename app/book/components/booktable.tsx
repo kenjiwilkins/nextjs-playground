@@ -2,7 +2,14 @@
 
 import { useActionState } from "react"
 import { fetchBooks } from "@/app/book/actions/fetchbooks"
-import { type BookItem, getBookAuthor, getBookDateRead, getBookStatus, getBookTitle } from "@/lib/notion/types"
+import {
+  type BookItem,
+  getBookAuthor,
+  getBookDateRead,
+  getBookRate,
+  getBookStatus,
+  getBookTitle,
+} from "@/lib/notion/types"
 import {
   Table,
   TableBody,
@@ -15,6 +22,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
+import { Rating, RatingButton } from "@/components/ui/shadcn-io/rating"
 
 type BooksState = { items: BookItem[]; nextCursor: string | null }
 
@@ -67,6 +75,7 @@ export default function BookTable({ initialProps, nextCursor }: BookTableProps) 
             <TableHead className="text-muted-foreground">Title</TableHead>
             <TableHead className="text-muted-foreground">Author</TableHead>
             <TableHead className="text-muted-foreground">Date Read</TableHead>
+            <TableHead className="text-muted-foreground">Rate</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -80,6 +89,15 @@ export default function BookTable({ initialProps, nextCursor }: BookTableProps) 
               <TableCell>{getBookTitle(book)}</TableCell>
               <TableCell>{getBookAuthor(book)}</TableCell>
               <TableCell>{getBookDateRead(book)}</TableCell>
+              <TableCell className="flex items-center">
+                {!!getBookRate(book) && (
+                  <Rating defaultValue={getBookRate(book)} readOnly className="gap-0">
+                    {Array.from({ length: 5 }).map((_, index) => (
+                      <RatingButton key={index} size={16} className="px-0 text-green-500" />
+                    ))}
+                  </Rating>
+                )}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
