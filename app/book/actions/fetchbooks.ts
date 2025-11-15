@@ -1,6 +1,6 @@
 "use server"
 import { getNotionClient, getNotionBookshelfDataSourceId } from "@/lib/notion/client"
-import { booksQueryResponseSchema, type BooksQueryResponse } from "@/lib/notion/types"
+import { booksQueryResponseSchema, bookItemSchema, type BooksQueryResponse } from "@/lib/notion/types"
 
 const notionClient = getNotionClient()
 const bookshelfDataSourceId = getNotionBookshelfDataSourceId()
@@ -26,4 +26,36 @@ export async function fetchBooks(nextCursor?: string): Promise<BooksQueryRespons
   }
 
   return parsed.data
+}
+
+export async function fetchBookMetadata(pageId: string): Promise<{
+  title: string
+  author: string
+  status: string
+  dateRead: string
+  rate: string
+}> {
+  const page = await notionClient.pages.retrieve({ page_id: pageId })
+
+  let title = ""
+  let author = ""
+  let status = ""
+  let dateRead = ""
+  let rate = ""
+
+  const parsed = bookItemSchema.safeParse(page)
+  if (parsed.success) {
+    title = parsed.data.properties.Title.title[0]?.plain_text || "Untitled"
+    author = parsed.data.properties.Author_Name?.rollup.array[0].title[0]?.plain_text || "Unknown"
+    status = parsed.data.properties.Status?.status?.name || "Unknown"
+    dateRead = parsed.data.properties.Date_Read?.date?.start || ""
+    rate = parsed.data.properties.Rate?.select?.name || ""
+  } else {
+    title = "Untitled"
+    author = "Unknown"
+    status = "Unknown"
+    dateRead = ""
+    rate = ""
+  }
+  return { title, author, status, dateRead, rate }
 }
