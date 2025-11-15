@@ -19,7 +19,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 import { Rating, RatingButton } from "@/components/ui/shadcn-io/rating"
@@ -64,9 +63,9 @@ export default function BookTable({ initialProps, nextCursor }: BookTableProps) 
         <TableCaption>
           <form action={dispatch}>
             <input type="hidden" name="cursor" value={state.nextCursor || ""} />
-            <Button disabled={isPending || !state.nextCursor} type="submit">
+            {state.nextCursor && <button className="w-full py-2 bg-muted rounded-b-lg disabled:opacity-50" disabled={isPending || !state.nextCursor} type="submit">
               <span>{isPending ? "Loading..." : "Load More"}</span>
-            </Button>
+            </button>}
           </form>
         </TableCaption>
         <TableHeader>
