@@ -3,6 +3,21 @@ import { getPageBlocks } from "@/lib/notion/bookshelf"
 import { PageBodyRenderer } from "@/components/ui/notion/page-body-renderer"
 import { AnyNotionBlock } from "@/lib/notion/types"
 
+// revalidate the page every day
+export const revalidate = 86400
+
+export async function generateStaticParams() {
+  const defaultPageId = process.env.NOTION_BOOKSHELF_DEFAULT_PAGE_ID
+  if (!defaultPageId) {
+    return []
+  }
+  return [
+    {
+      bookId: defaultPageId,
+    },
+  ]
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -41,6 +56,8 @@ export default async function BookEndPage({
       {bookId}
       {children}
       <PageBodyRenderer blocks={Blocks} />
+      {/* last revalidation, make this only available in dev and staging env in future */}
+      <div className="mt-8 text-sm">Last revalidated at: {new Date().toLocaleString()}</div>
     </div>
   )
 }

@@ -17,7 +17,6 @@ export async function fetchBooks(nextCursor?: string): Promise<BooksQueryRespons
     ],
     ...(nextCursor ? { start_cursor: nextCursor } : {}),
   })
-  console.log("Notion response:", response.results[0])
 
   // Validate and parse the response with Zod
   const parsed = booksQueryResponseSchema.safeParse(response)
