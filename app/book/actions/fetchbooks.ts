@@ -8,7 +8,7 @@ const bookshelfDataSourceId = getNotionBookshelfDataSourceId()
 export async function fetchBooks(nextCursor?: string): Promise<BooksQueryResponse> {
   const response = await notionClient.dataSources.query({
     data_source_id: bookshelfDataSourceId,
-    filter_properties: ["Title", "Author_Name", "Status", "Date_Read", "Rollup"],
+    filter_properties: ["Title", "Author_Name", "Status", "Date_Read", "Rollup", "Rate"],
     sorts: [
       {
         property: "Reading",

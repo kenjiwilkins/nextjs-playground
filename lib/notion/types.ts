@@ -9,18 +9,15 @@ const notionTitleSchema = z.object({
   ),
 })
 
-const notionRichTextSchema = z.object({
-  rich_text: z
-    .array(
-      z.object({
-        plain_text: z.string(),
-      })
-    )
-    .optional()
-    .default([]),
+const notionStatusSchema = z.object({
+  status: z
+    .object({
+      name: z.enum(["read", "unread", "reading"]),
+    })
+    .nullish(),
 })
 
-const notionSelectSchema = z.object({
+const notionSelectSchemema = z.object({
   select: z
     .object({
       name: z.string(),
@@ -43,10 +40,27 @@ const notionNumberSchema = z.object({
 // Book properties schema
 const bookPropertiesSchema = z.object({
   Title: notionTitleSchema,
-  Author_Name: notionRichTextSchema.optional(),
-  Status: notionSelectSchema.optional(),
+  Author_Name: z
+    .object({
+      rollup: z.object({
+        type: z.literal("array"),
+        array: z.array(
+          z.object({
+            type: z.literal("title"),
+            title: z.array(
+              z.object({
+                plain_text: z.string(),
+              })
+            ),
+          })
+        ),
+      }),
+    })
+    .optional(),
+  Status: notionStatusSchema.optional(),
   Date_Read: notionDateSchema.optional(),
   Rollup: notionNumberSchema.optional(),
+  Rate: notionSelectSchemema.optional(),
 })
 
 // Book item schema
@@ -73,16 +87,32 @@ export function getBookTitle(book: BookItem): string {
 }
 
 export function getBookAuthor(book: BookItem): string | null {
-  const richText = book.properties.Author_Name?.rich_text
-  return richText?.[0]?.plain_text ?? null
+  const name = book.properties.Author_Name?.rollup.array[0].title ?? [{ plain_text: "Unknown" }]
+  if (name && name.length > 0) {
+    return name[0].plain_text
+  }
+  return null
 }
 
 export function getBookStatus(book: BookItem): string | null {
-  return book.properties.Status?.select?.name ?? null
+  try {
+    return book.properties.Status?.status?.name ?? null
+  } catch (error) {
+    console.error(`failed to get book status:${book.id}`, error)
+    return null
+  }
 }
 
 export function getBookDateRead(book: BookItem): string | null {
   return book.properties.Date_Read?.date?.start ?? null
+}
+
+export function getBookRate(book: BookItem): number {
+  const bookRate: string | null = book.properties.Rate?.select?.name ?? null
+  if (bookRate) {
+    return parseInt(bookRate, 10)
+  }
+  return 0
 }
 
 export function getBookRollup(book: BookItem): number | null {

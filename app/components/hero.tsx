@@ -21,7 +21,7 @@ export default function Hero() {
             Blog
           </Link>
           <Link
-            href="/bookshelf"
+            href="/book"
             className="inline-flex items-center justify-center px-8 py-3 border border-accent text-accent rounded-lg font-semibold hover:bg-accent/10 transition-colors"
           >
             Bookshelf
