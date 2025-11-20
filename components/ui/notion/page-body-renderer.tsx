@@ -1,11 +1,13 @@
 import type { AnyNotionBlock } from "@/lib/notion/types"
 import { NotionBlockRenderer } from "./block-renderer"
+import { cn } from "@/lib/utils"
 
 type PageBodyRendererProps = {
   blocks: AnyNotionBlock[]
+  className?: string
 }
 
-export function PageBodyRenderer({ blocks }: PageBodyRendererProps) {
+export function PageBodyRenderer({ blocks, className }: PageBodyRendererProps) {
   if (!blocks || blocks.length === 0) {
     return null
   }
@@ -51,7 +53,7 @@ export function PageBodyRenderer({ blocks }: PageBodyRendererProps) {
   const groupedBlocks = groupBlocks(blocks)
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className={cn("max-w-4xl mx-auto", className)}>
       {groupedBlocks.map((blockOrGroup, index) => {
         if (Array.isArray(blockOrGroup)) {
           // it's a group of list items
