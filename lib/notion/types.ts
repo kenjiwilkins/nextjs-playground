@@ -1,5 +1,128 @@
 import { z } from "zod"
 
+const richTextAnnotationSchema = z.object({
+  bold: z.boolean(),
+  italic: z.boolean(),
+  strikethrough: z.boolean(),
+  underline: z.boolean(),
+  code: z.boolean(),
+  color: z.string(),
+})
+
+const richTextSchema = z.object({
+  type: z.literal("text"),
+  text: z.object({
+    content: z.string(),
+    link: z.object({ url: z.string().nullable() }).nullable(),
+  }),
+  annotations: richTextAnnotationSchema,
+  plain_text: z.string(),
+  href: z.string().nullable().optional(),
+})
+
+const paragraphBlockSchema = z.object({
+  id: z.string(),
+  type: z.literal("paragraph"),
+  paragraph: z.object({
+    rich_text: z.array(richTextSchema),
+    color: z.string().optional(),
+  }),
+})
+
+const heading1BlogkSchema = z.object({
+  id: z.string(),
+  type: z.literal("heading_1"),
+  heading_1: z.object({
+    rich_text: z.array(richTextSchema),
+    color: z.string().optional(),
+  }),
+})
+
+const heading2BlogkSchema = z.object({
+  id: z.string(),
+  type: z.literal("heading_2"),
+  heading_2: z.object({
+    rich_text: z.array(richTextSchema),
+    color: z.string().optional(),
+  }),
+})
+
+const heading3BlogkSchema = z.object({
+  id: z.string(),
+  type: z.literal("heading_3"),
+  heading_3: z.object({
+    rich_text: z.array(richTextSchema),
+    color: z.string().optional(),
+  }),
+})
+
+const bulletedListItemBlockSchema = z.object({
+  id: z.string(),
+  type: z.literal("bulleted_list_item"),
+  bulleted_list_item: z.object({
+    rich_text: z.array(richTextSchema),
+    color: z.string().optional(),
+  }),
+})
+
+const numberedListItemBlockSchema = z.object({
+  id: z.string(),
+  type: z.literal("numbered_list_item"),
+  numbered_list_item: z.object({
+    rich_text: z.array(richTextSchema),
+    color: z.string().optional(),
+  }),
+})
+
+const quoteBlockSchema = z.object({
+  id: z.string(),
+  type: z.literal("quote"),
+  quote: z.object({
+    rich_text: z.array(richTextSchema),
+    color: z.string().optional(),
+  }),
+})
+
+const codeBlockSchema = z.object({
+  id: z.string(),
+  type: z.literal("code"),
+  code: z.object({
+    rich_text: z.array(richTextSchema),
+    color: z.string().optional(),
+    language: z.string(),
+  }),
+})
+
+const imageBlockSchema = z.object({
+  id: z.string(),
+  type: z.literal("image"),
+  image: z.object({
+    type: z.enum(["file", "external"]),
+    external: z.object({ url: z.string() }).optional(),
+    file: z.object({ url: z.string(), expiry_time: z.string().optional() }).optional(),
+    caption: z.array(richTextSchema).optional(),
+  }),
+})
+
+export const notionBlockSchema = z.discriminatedUnion("type", [
+  paragraphBlockSchema,
+  heading1BlogkSchema,
+  heading2BlogkSchema,
+  heading3BlogkSchema,
+  bulletedListItemBlockSchema,
+  numberedListItemBlockSchema,
+  quoteBlockSchema,
+  codeBlockSchema,
+  imageBlockSchema,
+])
+
+export const unsupportedNotionBlockSchema = z
+  .object({
+    id: z.string(),
+    type: z.string(),
+  })
+  .loose()
+
 // Notion property schemas
 const notionTitleSchema = z.object({
   title: z.array(
@@ -118,3 +241,21 @@ export function getBookRate(book: BookItem): number {
 export function getBookRollup(book: BookItem): number | null {
   return book.properties.Rollup?.number ?? null
 }
+
+// notion blocks
+export type RichText = z.infer<typeof richTextSchema>
+export type RichTextAnnotation = z.infer<typeof richTextAnnotationSchema>
+export type ParagraphBlock = z.infer<typeof paragraphBlockSchema>
+export type Heading1Block = z.infer<typeof heading1BlogkSchema>
+export type Heading2Block = z.infer<typeof heading2BlogkSchema>
+export type Heading3Block = z.infer<typeof heading3BlogkSchema>
+export type BulletedListItemBlock = z.infer<typeof bulletedListItemBlockSchema>
+export type NumberedListItemBlock = z.infer<typeof numberedListItemBlockSchema>
+export type QuoteBlock = z.infer<typeof quoteBlockSchema>
+export type CodeBlock = z.infer<typeof codeBlockSchema>
+export type ImageBlock = z.infer<typeof imageBlockSchema>
+export type NotionBlock = z.infer<typeof notionBlockSchema>
+export type UnsupportedNotionBlock = z.infer<typeof unsupportedNotionBlockSchema>
+
+// Helper type for any Notion block
+export type AnyNotionBlock = NotionBlock | UnsupportedNotionBlock
