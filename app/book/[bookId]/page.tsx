@@ -80,17 +80,17 @@ export default async function BookEndPage({
         <div className="container">
           <div className="flex flex-col gap-4 p-4">
             <h1 className="text-2xl md:text-4xl font-bold">{bookMetadata.title}</h1>
-            <h2 className="text-xl md:text-2xl font-semibold text-muted-foreground">{bookMetadata.author}</h2>
+            <h2 className="text-xl md:text-2xl font-semibold text-muted-foreground">
+              {bookMetadata.author}
+            </h2>
             <div className="flex flex-col md:flex-row gap-2">
-              <Badge className={handleBadgeColor(bookMetadata.status)}>
-                {bookMetadata.status}
-              </Badge>
+              <Badge className={handleBadgeColor(bookMetadata.status)}>{bookMetadata.status}</Badge>
               {bookMetadata.dateRead && (
                 <span className="text-sm md:text-base">Date Read: {bookMetadata.dateRead}</span>
               )}
               {bookMetadata.rate && (
                 <Rating defaultValue={parseInt(bookMetadata.rate, 10)} readOnly className="gap-0">
-                  {Array.from({ length: 5}).map((_, index) => (
+                  {Array.from({ length: 5 }).map((_, index) => (
                     <RatingButton key={index} size={16} className={cn("px-0 text-green-500")} />
                   ))}
                 </Rating>

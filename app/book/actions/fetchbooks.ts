@@ -1,6 +1,10 @@
 "use server"
 import { getNotionClient, getNotionBookshelfDataSourceId } from "@/lib/notion/client"
-import { booksQueryResponseSchema, bookItemSchema, type BooksQueryResponse } from "@/lib/notion/types"
+import {
+  booksQueryResponseSchema,
+  bookItemSchema,
+  type BooksQueryResponse,
+} from "@/lib/notion/types"
 
 const notionClient = getNotionClient()
 const bookshelfDataSourceId = getNotionBookshelfDataSourceId()
