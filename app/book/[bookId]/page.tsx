@@ -84,7 +84,10 @@ export default async function BookEndPage({
     }
   }
 
-  const coverImage = googleBooksData?.volumeInfo.imageLinks?.thumbnail?.replace("http://", "https://")
+  const coverImage = googleBooksData?.volumeInfo.imageLinks?.thumbnail?.replace(
+    "http://",
+    "https://"
+  )
 
   if (error) {
     return <div>Error loading page: {error}</div>
@@ -122,7 +125,9 @@ export default async function BookEndPage({
                 {bookMetadata.author}
               </h2>
               <div className="flex flex-col md:flex-row gap-2">
-                <Badge className={handleBadgeColor(bookMetadata.status)}>{bookMetadata.status}</Badge>
+                <Badge className={handleBadgeColor(bookMetadata.status)}>
+                  {bookMetadata.status}
+                </Badge>
                 {bookMetadata.dateRead && (
                   <span className="text-sm md:text-base">Date Read: {bookMetadata.dateRead}</span>
                 )}

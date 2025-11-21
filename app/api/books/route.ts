@@ -21,20 +21,14 @@ export async function GET(request: NextRequest) {
   const isbn = searchParams.get("isbn")
 
   if (!isbn) {
-    return NextResponse.json(
-      { error: "ISBN parameter is required" },
-      { status: 400 }
-    )
+    return NextResponse.json({ error: "ISBN parameter is required" }, { status: 400 })
   }
 
   try {
     const book = await getCachedBook(isbn)
 
     if (!book) {
-      return NextResponse.json(
-        { error: "Book not found" },
-        { status: 404 }
-      )
+      return NextResponse.json({ error: "Book not found" }, { status: 404 })
     }
 
     return NextResponse.json(book, {
@@ -45,9 +39,6 @@ export async function GET(request: NextRequest) {
     })
   } catch (error) {
     console.error("Failed to fetch book from Google Books API:", error)
-    return NextResponse.json(
-      { error: "Failed to fetch book data" },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: "Failed to fetch book data" }, { status: 500 })
   }
 }
