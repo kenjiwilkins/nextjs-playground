@@ -132,6 +132,14 @@ const notionTitleSchema = z.object({
   ),
 })
 
+const notionTextSchema = z.object({
+  rich_text: z.array(
+    z.object({
+      plain_text: z.string(),
+    })
+  ),
+})
+
 const notionStatusSchema = z.object({
   status: z
     .object({
@@ -184,6 +192,7 @@ const bookPropertiesSchema = z.object({
   Date_Read: notionDateSchema.optional(),
   Rollup: notionNumberSchema.optional(),
   Rate: notionSelectSchemema.optional(),
+  ISBN: notionTextSchema.optional(),
 })
 
 // Book item schema

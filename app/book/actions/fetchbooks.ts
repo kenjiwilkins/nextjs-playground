@@ -38,6 +38,7 @@ export async function fetchBookMetadata(pageId: string): Promise<{
   status: string
   dateRead: string
   rate: string
+  isbn: string
 }> {
   const page = await notionClient.pages.retrieve({ page_id: pageId })
 
@@ -46,6 +47,7 @@ export async function fetchBookMetadata(pageId: string): Promise<{
   let status = ""
   let dateRead = ""
   let rate = ""
+  let isbn = ""
 
   const parsed = bookItemSchema.safeParse(page)
   if (parsed.success) {
@@ -54,12 +56,14 @@ export async function fetchBookMetadata(pageId: string): Promise<{
     status = parsed.data.properties.Status?.status?.name || "Unknown"
     dateRead = parsed.data.properties.Date_Read?.date?.start || ""
     rate = parsed.data.properties.Rate?.select?.name || ""
+    isbn = parsed.data.properties.ISBN?.rich_text[0]?.plain_text || ""
   } else {
     title = "Untitled"
     author = "Unknown"
     status = "Unknown"
     dateRead = ""
     rate = ""
+    isbn = ""
   }
-  return { title, author, status, dateRead, rate }
+  return { title, author, status, dateRead, rate, isbn }
 }
