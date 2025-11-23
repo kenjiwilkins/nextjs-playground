@@ -1,6 +1,18 @@
 import NextAuth, { NextAuthOptions } from "next-auth"
 import Discord from "next-auth/providers/discord"
 
+declare module "next-auth" {
+  interface Session {
+    accessToken?: string
+  }
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    accessToken?: string
+  }
+}
+
 export const authOptions: NextAuthOptions = {
   providers: [
     Discord({
@@ -9,9 +21,9 @@ export const authOptions: NextAuthOptions = {
       authorization: {
         params: {
           scope: "identify email guilds",
-        }
-      }
-    })
+        },
+      },
+    }),
   ],
   session: {
     strategy: "jwt",
@@ -24,7 +36,7 @@ export const authOptions: NextAuthOptions = {
       return token
     },
     async session({ session, token }) {
-      (session as any).accessToken = token.accessToken
+      session.accessToken = token.accessToken
       return session
     },
   },

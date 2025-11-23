@@ -1,13 +1,18 @@
-"use client";
-import { signOut } from "next-auth/react";
-import { Button } from "@/components/ui/button";
+"use client"
+import { signOut } from "next-auth/react"
+import { Button } from "@/components/ui/button"
 
 export function SignOutButton() {
   return (
-    <Button variant="secondary" onClick={() => signOut({
-      callbackUrl: "/recipe"
-    })}>
+    <Button
+      variant="secondary"
+      onClick={() =>
+        signOut({
+          callbackUrl: "/recipe",
+        })
+      }
+    >
       Sign out from Discord
     </Button>
-  );
+  )
 }
