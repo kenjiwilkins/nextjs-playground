@@ -12,6 +12,14 @@ export async function getGuilds(accessToken: string): Promise<DiscordGuild[]> {
       Authorization: `Bearer ${accessToken}`,
     },
   })
+
+  // Handle rate limiting
+  if (response.status === 429) {
+    const retryAfter = response.headers.get("Retry-After")
+    console.error(`Rate limited by Discord API. Retry after ${retryAfter}s`)
+    return []
+  }
+
   const data = await response.json()
 
   if (!response.ok || !Array.isArray(data)) {
