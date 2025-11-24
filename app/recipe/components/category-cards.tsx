@@ -72,7 +72,7 @@ export function CategoryCards() {
                 {/* Gradient Background */}
                 <div
                   className={`
-                    absolute inset-0 bg-gradient-to-br
+                    absolute inset-0 bg-linear-to-br
                     ${isHovered ? category.hoverGradient : category.gradient}
                     transition-all duration-300
                   `}
@@ -81,7 +81,7 @@ export function CategoryCards() {
                 {/* Shine Effect */}
                 <div
                   className={`
-                    absolute inset-0 bg-gradient-to-tr from-transparent via-white to-transparent
+                    absolute inset-0 bg-linear-to-tr from-transparent via-white to-transparent
                     opacity-0 group-hover:opacity-20
                     transition-opacity duration-300
                   `}

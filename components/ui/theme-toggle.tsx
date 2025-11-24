@@ -7,12 +7,14 @@ import { useEffect, useState } from "react"
 
 export default function ThemeToggle() {
   const { theme, setTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
 
   // Only render after client-side hydration
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  function useMounted() {
+    const [mounted, setMounted] = useState(false)
+    useEffect(() => setMounted(true), [])
+    return mounted
+  }
+  const mounted = useMounted()
 
   // Prevent hydration mismatch by not rendering on server
   if (!mounted) {
