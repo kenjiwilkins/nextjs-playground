@@ -9,7 +9,7 @@ export async function proxy(request: NextRequest) {
     const token = await getToken({ req: request })
 
     if (!token) {
-      return NextResponse.redirect(new URL("/recipe", request.url))
+      return NextResponse.redirect(new URL("/recipe?error=unauthorized", request.url))
     }
   }
 

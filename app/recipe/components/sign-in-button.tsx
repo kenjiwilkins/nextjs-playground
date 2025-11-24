@@ -1,6 +1,7 @@
 "use client"
 import { signIn } from "next-auth/react"
 import { Button } from "@/components/ui/button"
+import { useState } from "react"
 
 function DiscordIcon() {
   return (
@@ -16,18 +17,54 @@ function DiscordIcon() {
   )
 }
 
+function LoadingSpinner() {
+  return (
+    <svg
+      className="animate-spin h-5 w-5"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <circle
+        className="opacity-25"
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        strokeWidth="4"
+      />
+      <path
+        className="opacity-75"
+        fill="currentColor"
+        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+      />
+    </svg>
+  )
+}
+
 export function SignInButton() {
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleSignIn = async () => {
+    setIsLoading(true)
+    try {
+      await signIn("discord", {
+        callbackUrl: "/recipe",
+      })
+    } catch (error) {
+      console.error("Sign in error:", error)
+      setIsLoading(false)
+    }
+  }
+
   return (
     <Button
-      onClick={() =>
-        signIn("discord", {
-          callbackUrl: "/recipe",
-        })
-      }
-      className="bg-[#5865F2] hover:bg-[#4752C4] text-white"
+      onClick={handleSignIn}
+      disabled={isLoading}
+      className="bg-[#5865F2] hover:bg-[#4752C4] text-white disabled:opacity-50 disabled:cursor-not-allowed"
     >
-      <DiscordIcon />
-      Sign in with Discord
+      {isLoading ? <LoadingSpinner /> : <DiscordIcon />}
+      {isLoading ? "Signing in..." : "Sign in with Discord"}
     </Button>
   )
 }
