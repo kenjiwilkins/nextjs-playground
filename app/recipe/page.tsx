@@ -24,12 +24,7 @@ export default async function RecipePage() {
   // isGuildMember will be false if user is not in the required guild
   // isGuildMember will be undefined if DISCORD_GUILD_ID is not set or guild check failed
   if (session.isGuildMember === false) {
-    return (
-      <UnauthorizedUI
-        userName={session.user?.name}
-        userEmail={session.user?.email}
-      />
-    )
+    return <UnauthorizedUI userName={session.user?.name} userEmail={session.user?.email} />
   }
 
   // Case 3: User is authenticated and is a guild member (or guild check is disabled)

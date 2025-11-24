@@ -32,12 +32,8 @@ export function UnauthorizedUI({ userName, userEmail }: UnauthorizedUIProps) {
 
           {/* Title */}
           <div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">
-              Access Denied
-            </h1>
-            <p className="text-gray-600">
-              You are not authorized to view this page
-            </p>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">Access Denied</h1>
+            <p className="text-gray-600">You are not authorized to view this page</p>
           </div>
 
           {/* User Info */}
@@ -45,24 +41,22 @@ export function UnauthorizedUI({ userName, userEmail }: UnauthorizedUIProps) {
             <div className="w-full bg-gray-50 rounded-lg p-4 border border-gray-200">
               <p className="text-sm text-gray-500 mb-1">Signed in as:</p>
               <p className="font-semibold text-gray-900">{userName}</p>
-              {userEmail && (
-                <p className="text-sm text-gray-600 mt-1">{userEmail}</p>
-              )}
+              {userEmail && <p className="text-sm text-gray-600 mt-1">{userEmail}</p>}
             </div>
           )}
 
           {/* Reason */}
           <div className="w-full bg-amber-50 rounded-lg p-4 border border-amber-200">
             <p className="text-sm text-amber-800">
-              <span className="font-semibold">Reason:</span> This content is only
-              accessible to members of our private Discord community.
+              <span className="font-semibold">Reason:</span> This content is only accessible to
+              members of our private Discord community.
             </p>
           </div>
 
           {/* Help Text */}
           <p className="text-sm text-gray-600">
-            Access to this community is by invitation only. If you believe you
-            should have access, please contact an administrator.
+            Access to this community is by invitation only. If you believe you should have access,
+            please contact an administrator.
           </p>
 
           {/* Actions */}

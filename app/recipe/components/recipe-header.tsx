@@ -34,12 +34,8 @@ export function RecipeHeader({ session }: RecipeHeaderProps) {
           <span className="font-medium hidden md:inline">{session.user?.name}</span>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem disabled>
-            {session.user?.name}
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => signOut()}>
-            Sign out
-          </DropdownMenuItem>
+          <DropdownMenuItem disabled>{session.user?.name}</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => signOut()}>Sign out</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </header>
