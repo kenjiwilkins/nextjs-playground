@@ -3,11 +3,21 @@
 import { Moon, Sun } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useTheme } from "next-themes"
+import { useEffect, useState } from "react"
 
 export default function ThemeToggle() {
   const { theme, setTheme } = useTheme()
 
-  if (!theme) {
+  // Only render after client-side hydration
+  function useMounted() {
+    const [mounted, setMounted] = useState(false)
+    useEffect(() => setMounted(true), [])
+    return mounted
+  }
+  const mounted = useMounted()
+
+  // Prevent hydration mismatch by not rendering on server
+  if (!mounted) {
     return null
   }
 

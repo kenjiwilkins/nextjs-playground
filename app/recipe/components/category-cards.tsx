@@ -46,8 +46,8 @@ export function CategoryCards() {
   return (
     <div className="w-full max-w-6xl mx-auto px-4 py-12">
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-gray-900 mb-3">Recipe Collections</h1>
-        <p className="text-lg text-gray-600">Choose a category to explore our curated recipes</p>
+        <h1 className="text-4xl font-bold mb-3">Recipe Collections</h1>
+        <p className="text-lg">Choose a category to explore our curated recipes</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -72,7 +72,7 @@ export function CategoryCards() {
                 {/* Gradient Background */}
                 <div
                   className={`
-                    absolute inset-0 bg-gradient-to-br
+                    absolute inset-0 bg-linear-to-br
                     ${isHovered ? category.hoverGradient : category.gradient}
                     transition-all duration-300
                   `}
@@ -81,7 +81,7 @@ export function CategoryCards() {
                 {/* Shine Effect */}
                 <div
                   className={`
-                    absolute inset-0 bg-gradient-to-tr from-transparent via-white to-transparent
+                    absolute inset-0 bg-linear-to-tr from-transparent via-white to-transparent
                     opacity-0 group-hover:opacity-20
                     transition-opacity duration-300
                   `}
