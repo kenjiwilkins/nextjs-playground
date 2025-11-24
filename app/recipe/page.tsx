@@ -29,7 +29,7 @@ export default async function RecipePage() {
 
   // Case 3: User is authenticated and is a guild member (or guild check is disabled)
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen">
       <RecipeHeader session={session} />
       <main className="flex items-center justify-center py-8">
         <CategoryCards />

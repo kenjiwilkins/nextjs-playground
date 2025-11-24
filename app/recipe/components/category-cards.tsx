@@ -46,8 +46,8 @@ export function CategoryCards() {
   return (
     <div className="w-full max-w-6xl mx-auto px-4 py-12">
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-gray-900 mb-3">Recipe Collections</h1>
-        <p className="text-lg text-gray-600">Choose a category to explore our curated recipes</p>
+        <h1 className="text-4xl font-bold mb-3">Recipe Collections</h1>
+        <p className="text-lg">Choose a category to explore our curated recipes</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
