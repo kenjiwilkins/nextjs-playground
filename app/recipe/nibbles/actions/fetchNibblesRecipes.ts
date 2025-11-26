@@ -19,7 +19,7 @@ export async function fetchNibblesRecipes(nextCursor?: string) {
         contains: recipeNibblesPageId,
       },
     },
-    page_size: 5,
+    page_size: 50,
     start_cursor: nextCursor || undefined,
   })
   // Validate and parse the response with Zod
