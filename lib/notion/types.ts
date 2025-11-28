@@ -168,6 +168,30 @@ const notionNumberSchema = z.object({
   number: z.number().nullish(),
 })
 
+const notionRelationSchema = z.object({
+  relation: z.array(
+    z.object({
+      id: z.string(),
+    })
+  ),
+})
+
+const notionRollupTitleSchema = z.object({
+  rollup: z.object({
+    type: z.literal("array"),
+    array: z.array(
+      z.object({
+        type: z.literal("title"),
+        title: z.array(
+          z.object({
+            plain_text: z.string(),
+          })
+        ),
+      })
+    ),
+  }),
+})
+
 // Book properties schema
 const bookPropertiesSchema = z.object({
   Title: notionTitleSchema,
@@ -250,6 +274,24 @@ export function getBookRate(book: BookItem): number {
 export function getBookRollup(book: BookItem): number | null {
   return book.properties.Rollup?.number ?? null
 }
+
+// Recipe properties schema
+export const recipePropertiesSchema = z.object({
+  Name: notionTitleSchema,
+  tags: notionRelationSchema,
+  tagName: notionRollupTitleSchema,
+})
+
+export const recipeItemSchema = z.object({
+  id: z.string(),
+  properties: recipePropertiesSchema,
+})
+
+export const recipesQueryResponseSchema = z.object({
+  results: z.array(recipeItemSchema),
+  next_cursor: z.string().nullable(),
+  has_more: z.boolean(),
+})
 
 // notion blocks
 export type RichText = z.infer<typeof richTextSchema>

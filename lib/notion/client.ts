@@ -49,6 +49,29 @@ export function getNotionBookshelfDataSourceId(): string {
 }
 
 /**
+ * Get the Notion Recipe Data Source ID.
+ */
+export function getNotionRecipeDataSourceId(): string {
+  const dataSourceId = process.env.NOTION_RECIPE_DATA_SOURCE_ID
+
+  if (!dataSourceId) {
+    throw new Error("NOTION_RECIPE_DATA_SOURCE_ID is not defined in environment variables")
+  }
+
+  return dataSourceId
+}
+
+export function getNotionRecipeNibblesPageId(): string {
+  const pageId = process.env.NOTION_RECIPE_NIBBLES_PAGE_ID
+
+  if (!pageId) {
+    throw new Error("NOTION_RECIPE_NIBBLES_PAGE_ID is not defined in environment variables")
+  }
+
+  return pageId
+}
+
+/**
  * Validate notion configuration.
  */
 export function validateNotionConfig(): { valid: boolean; errors: string[] } {
