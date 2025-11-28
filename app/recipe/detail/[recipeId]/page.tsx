@@ -6,8 +6,8 @@ import { fetchRecipeMetadata } from "../../actions/fetchrecipes"
 import { Separator } from "@/components/ui/separator"
 import { Badge } from "@/components/ui/badge"
 
-// revalidate the page every day
-export const revalidate = 86400
+// Force dynamic rendering to ensure metadata is generated per request
+export const dynamic = "force-dynamic"
 
 export async function generateMetadata({
   params,
