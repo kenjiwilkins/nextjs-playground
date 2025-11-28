@@ -293,6 +293,22 @@ export const recipesQueryResponseSchema = z.object({
   has_more: z.boolean(),
 })
 
+// Inferred recipe types
+export type RecipeItem = z.infer<typeof recipeItemSchema>
+export type RecipeProperties = z.infer<typeof recipePropertiesSchema>
+export type RecipesQueryResponse = z.infer<typeof recipesQueryResponseSchema>
+
+// Helper functions to safely get recipe property values
+export function getRecipeName(recipe: RecipeItem): string {
+  return recipe.properties.Name.title[0]?.plain_text ?? "Untitled Recipe"
+}
+
+export function getRecipeTags(recipe: RecipeItem): string[] {
+  return recipe.properties.tagName?.rollup.array.map(
+    (tag) => tag.title[0]?.plain_text || ""
+  ).filter(Boolean) || []
+}
+
 // notion blocks
 export type RichText = z.infer<typeof richTextSchema>
 export type RichTextAnnotation = z.infer<typeof richTextAnnotationSchema>
