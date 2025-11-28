@@ -16,9 +16,31 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { recipeId } = await params
   const recipeMetadata = await fetchRecipeMetadata(recipeId)
+
+  const title = `${recipeMetadata.name} | Kenji Wilkins`
+  const description = `Recipe for ${recipeMetadata.name}. Tags: ${recipeMetadata.tags.join(", ")}`
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
+  const url = `${baseUrl}/recipe/detail/${recipeId}`
   return {
-    title: `${recipeMetadata.name} | Kenji Wilkins`,
-    description: `Recipe for ${recipeMetadata.name}. Tags: ${recipeMetadata.tags.join(", ")}`,
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: "Kenji Wilkins",
+      locale: "en_US",
+      type: "article",
+      publishedTime: new Date().toISOString(),
+      authors: ["Kenji Wilkins"],
+      tags: recipeMetadata.tags,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      creator: "@kenjiwilkins",
+    },
   }
 }
 
