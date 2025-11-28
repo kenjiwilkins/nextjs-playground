@@ -304,9 +304,11 @@ export function getRecipeName(recipe: RecipeItem): string {
 }
 
 export function getRecipeTags(recipe: RecipeItem): string[] {
-  return recipe.properties.tagName?.rollup.array.map(
-    (tag) => tag.title[0]?.plain_text || ""
-  ).filter(Boolean) || []
+  return (
+    recipe.properties.tagName?.rollup.array
+      .map((tag) => tag.title[0]?.plain_text || "")
+      .filter(Boolean) || []
+  )
 }
 
 // notion blocks

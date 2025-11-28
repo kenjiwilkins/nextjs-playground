@@ -38,9 +38,10 @@ export async function fetchRecipeMetadata(pageId: string): Promise<{
   const parsed = recipeItemSchema.safeParse(page)
   if (parsed.success) {
     name = parsed.data.properties.Name.title[0]?.plain_text || "Untitled Recipe"
-    tags = parsed.data.properties.tagName?.rollup.array.map(
-      (tag) => tag.title[0]?.plain_text || ""
-    ).filter(Boolean) || []
+    tags =
+      parsed.data.properties.tagName?.rollup.array
+        .map((tag) => tag.title[0]?.plain_text || "")
+        .filter(Boolean) || []
   } else {
     name = "Untitled Recipe"
     tags = []
