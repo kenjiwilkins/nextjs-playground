@@ -19,8 +19,7 @@ export async function generateMetadata({
 
   const title = `${recipeMetadata.name} | Kenji Wilkins`
   const description = `Recipe for ${recipeMetadata.name}. Tags: ${recipeMetadata.tags.join(", ")}`
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
-  const url = `${baseUrl}/recipe/detail/${recipeId}`
+  const url = `/recipe/detail/${recipeId}`
   return {
     title,
     description,
