@@ -6,9 +6,6 @@ import { fetchRecipeMetadata } from "../../actions/fetchrecipes"
 import { Separator } from "@/components/ui/separator"
 import { Badge } from "@/components/ui/badge"
 
-// Force dynamic rendering to ensure metadata is generated per request
-export const dynamic = "force-dynamic"
-
 export async function generateMetadata({
   params,
 }: {

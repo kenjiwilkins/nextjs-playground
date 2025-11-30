@@ -4,8 +4,6 @@ import { SignInButton } from "./components/sign-in-button"
 import { UnauthorizedUI } from "./components/unauthorized-ui"
 import { RecipeHeader } from "./components/recipe-header"
 
-export const dynamic = "force-dynamic"
-
 export default async function RecipeLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions)
 
