@@ -9,7 +9,8 @@ import { cn, formatISBN } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Rating, RatingButton } from "@/components/ui/shadcn-io/rating"
 import BookHeader from "../components/header"
-import { getGoogleBooksClient, type Volume } from "@/lib/google-books"
+import { type Volume } from "@/lib/google-books"
+import { getCachedBook } from "@/lib/data/google-books"
 
 export async function generateStaticParams() {
   const defaultPageId = process.env.NOTION_BOOKSHELF_DEFAULT_PAGE_ID
@@ -73,8 +74,7 @@ export default async function BookEndPage({
     try {
       const isbns = formatISBN(bookMetadata.isbn)
       if (isbns.length > 0) {
-        const client = getGoogleBooksClient()
-        googleBooksData = await client.getBookByISBN(isbns[0])
+        googleBooksData = await getCachedBook(isbns[0])
       }
     } catch (e) {
       console.error("Failed to fetch Google Books data:", e)
