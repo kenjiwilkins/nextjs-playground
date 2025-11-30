@@ -11,9 +11,6 @@ import { Rating, RatingButton } from "@/components/ui/shadcn-io/rating"
 import BookHeader from "../components/header"
 import { getGoogleBooksClient, type Volume } from "@/lib/google-books"
 
-// revalidate the page every day
-export const revalidate = 86400
-
 export async function generateStaticParams() {
   const defaultPageId = process.env.NOTION_BOOKSHELF_DEFAULT_PAGE_ID
   if (!defaultPageId) {
@@ -102,7 +99,7 @@ export default async function BookEndPage({
           <div className="flex flex-col md:flex-row gap-6 p-4">
             {/* Book Cover Image */}
             {coverImage && (
-              <figure className="flex-shrink-0">
+              <figure className="shrink-0">
                 <Image
                   src={coverImage}
                   alt={`Cover of ${bookMetadata.title}`}

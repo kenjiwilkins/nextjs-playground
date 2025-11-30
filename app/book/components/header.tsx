@@ -11,13 +11,12 @@ export default function BookHeader() {
 
   function useMounted() {
     const [mounted, setMounted] = useState(false)
-      useEffect(() => {
-        setMounted(true)
-      }, [])
+    useEffect(() => {
+      setMounted(true)
+    }, [])
     return mounted
   }
   const mounted = useMounted()
-
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">

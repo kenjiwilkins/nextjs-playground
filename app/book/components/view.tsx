@@ -5,7 +5,7 @@ import BookTable from "./booktable"
 import { fetchBooks } from "@/app/book/actions/fetchbooks"
 
 export async function BookPageView() {
-  'use cache';
+  "use cache"
   const data = await fetchBooks()
 
   return (
