@@ -4,7 +4,17 @@ import { SignInButton } from "./components/sign-in-button"
 import { UnauthorizedUI } from "./components/unauthorized-ui"
 import { RecipeHeader } from "./components/recipe-header"
 
-export default async function RecipeLayout({ children }: { children: React.ReactNode }) {
+import { Suspense } from "react"
+
+export default function RecipeLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+      <AuthGuard>{children}</AuthGuard>
+    </Suspense>
+  )
+}
+
+async function AuthGuard({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions)
 
   // Case 1: User is not authenticated

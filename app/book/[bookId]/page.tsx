@@ -3,7 +3,7 @@ import Image from "next/image"
 import { getPageBlocks } from "@/lib/notion/bookshelf"
 import { PageBodyRenderer } from "@/components/ui/notion/page-body-renderer"
 import { AnyNotionBlock } from "@/lib/notion/types"
-import { fetchBookMetadata } from "../actions/fetchbooks"
+import { fetchBookMetadata, fetchBooks } from "../actions/fetchbooks"
 import { Separator } from "@/components/ui/separator"
 import { cn, formatISBN } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
@@ -13,15 +13,19 @@ import { type Volume } from "@/lib/google-books"
 import { getCachedBook } from "@/lib/data/google-books"
 
 export async function generateStaticParams() {
-  const defaultPageId = process.env.NOTION_BOOKSHELF_DEFAULT_PAGE_ID
-  if (!defaultPageId) {
+  const books = await fetchBooks()
+
+  if (books.results.length === 0) {
+    const defaultPageId = process.env.NOTION_BOOKSHELF_DEFAULT_PAGE_ID
+    if (defaultPageId) {
+      return [{ bookId: defaultPageId }]
+    }
     return []
   }
-  return [
-    {
-      bookId: defaultPageId,
-    },
-  ]
+
+  return books.results.map((book) => ({
+    bookId: book.id,
+  }))
 }
 
 export async function generateMetadata({
