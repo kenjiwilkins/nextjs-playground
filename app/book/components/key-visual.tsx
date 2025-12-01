@@ -11,7 +11,7 @@ export default function KeyVisual() {
           fill
           priority
           className="object-cover"
-          sizes="100vw"
+          sizes="100vw h-[20vh]"
         />
       </div>
 
@@ -23,7 +23,7 @@ export default function KeyVisual() {
           fill
           priority
           className="object-cover"
-          sizes="100vw"
+          sizes="100vw h-[20vh]"
         />
       </div>
     </div>

@@ -3,27 +3,29 @@ import Image from "next/image"
 import { getPageBlocks } from "@/lib/notion/bookshelf"
 import { PageBodyRenderer } from "@/components/ui/notion/page-body-renderer"
 import { AnyNotionBlock } from "@/lib/notion/types"
-import { fetchBookMetadata } from "../actions/fetchbooks"
+import { fetchBookMetadata, fetchBooks } from "../actions/fetchbooks"
 import { Separator } from "@/components/ui/separator"
 import { cn, formatISBN } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 import { Rating, RatingButton } from "@/components/ui/shadcn-io/rating"
 import BookHeader from "../components/header"
-import { getGoogleBooksClient, type Volume } from "@/lib/google-books"
-
-// revalidate the page every day
-export const revalidate = 86400
+import { type Volume } from "@/lib/google-books"
+import { getCachedBook } from "@/lib/data/google-books"
 
 export async function generateStaticParams() {
-  const defaultPageId = process.env.NOTION_BOOKSHELF_DEFAULT_PAGE_ID
-  if (!defaultPageId) {
+  const books = await fetchBooks()
+
+  if (books.results.length === 0) {
+    const defaultPageId = process.env.NOTION_BOOKSHELF_DEFAULT_PAGE_ID
+    if (defaultPageId) {
+      return [{ bookId: defaultPageId }]
+    }
     return []
   }
-  return [
-    {
-      bookId: defaultPageId,
-    },
-  ]
+
+  return books.results.map((book) => ({
+    bookId: book.id,
+  }))
 }
 
 export async function generateMetadata({
@@ -76,8 +78,7 @@ export default async function BookEndPage({
     try {
       const isbns = formatISBN(bookMetadata.isbn)
       if (isbns.length > 0) {
-        const client = getGoogleBooksClient()
-        googleBooksData = await client.getBookByISBN(isbns[0])
+        googleBooksData = await getCachedBook(isbns[0])
       }
     } catch (e) {
       console.error("Failed to fetch Google Books data:", e)
@@ -102,7 +103,7 @@ export default async function BookEndPage({
           <div className="flex flex-col md:flex-row gap-6 p-4">
             {/* Book Cover Image */}
             {coverImage && (
-              <figure className="flex-shrink-0">
+              <figure className="shrink-0">
                 <Image
                   src={coverImage}
                   alt={`Cover of ${bookMetadata.title}`}

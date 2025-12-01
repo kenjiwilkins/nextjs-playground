@@ -2,12 +2,21 @@ import { Metadata } from "next"
 import { getRecipePageBlocks } from "@/lib/notion/recipes"
 import { PageBodyRenderer } from "@/components/ui/notion/page-body-renderer"
 import { AnyNotionBlock } from "@/lib/notion/types"
-import { fetchRecipeMetadata } from "../../actions/fetchrecipes"
+import { fetchRecipeMetadata, fetchRecipes } from "../../actions/fetchrecipes"
 import { Separator } from "@/components/ui/separator"
 import { Badge } from "@/components/ui/badge"
 
-// Force dynamic rendering to ensure metadata is generated per request
-export const dynamic = "force-dynamic"
+export async function generateStaticParams() {
+  const recipes = await fetchRecipes()
+
+  if (recipes.results.length === 0) {
+    return []
+  }
+
+  return recipes.results.map((recipe) => ({
+    recipeId: recipe.id,
+  }))
+}
 
 export async function generateMetadata({
   params,

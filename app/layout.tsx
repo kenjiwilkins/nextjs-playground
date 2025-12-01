@@ -3,6 +3,8 @@ import { ThemeProvider } from "@/components/theme-provider"
 import "./globals.css"
 import { jetBrainsMono, notoSans } from "@/components/ui/fonts"
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { AppFooter } from "./components/footer"
+import { Suspense } from "react"
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
@@ -22,7 +24,7 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
@@ -34,6 +36,9 @@ export default function RootLayout({
           {children}
         </ThemeProvider>
         <SpeedInsights />
+        <Suspense>
+          <AppFooter />
+        </Suspense>
       </body>
     </html>
   )

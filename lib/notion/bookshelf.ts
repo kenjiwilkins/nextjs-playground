@@ -17,7 +17,11 @@ export async function getBookshelfBooks() {
   })
 }
 
+import { cacheLife } from "next/cache"
+
 export async function getPageBlocks(pageId: string): Promise<AnyNotionBlock[]> {
+  "use cache"
+  cacheLife("days")
   const blocks: AnyNotionBlock[] = []
   const response = await notionClient?.blocks.children.list({
     block_id: pageId,
