@@ -71,6 +71,16 @@ export function getNotionRecipeNibblesPageId(): string {
   return pageId
 }
 
+export function getNotionRecipePreservePageId(): string {
+  const pageId = process.env.NOTION_RECIPE_PRESERVE_PAGE_ID
+
+  if (!pageId) {
+    throw new Error("NOTION_RECIPE_PRESERVE_PAGE_ID is not defined in environment variables")
+  }
+
+  return pageId
+}
+
 /**
  * Validate notion configuration.
  */
