@@ -15,10 +15,7 @@
     },
     "preserveOutput": "always",
     "reporter": [
-      [
-        "html",
-        null
-      ],
+      ["html", null],
       [
         "json",
         {
@@ -43,9 +40,7 @@
         "name": "Desktop Chrome",
         "testDir": "/Users/michaelwilkins/Documents/GitHub/nextjs-playground/e2e",
         "testIgnore": [],
-        "testMatch": [
-          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
-        ],
+        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
         "timeout": 30000
       },
       {
@@ -59,9 +54,7 @@
         "name": "Desktop Firefox",
         "testDir": "/Users/michaelwilkins/Documents/GitHub/nextjs-playground/e2e",
         "testIgnore": [],
-        "testMatch": [
-          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
-        ],
+        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
         "timeout": 30000
       },
       {
@@ -75,9 +68,7 @@
         "name": "Desktop Safari",
         "testDir": "/Users/michaelwilkins/Documents/GitHub/nextjs-playground/e2e",
         "testIgnore": [],
-        "testMatch": [
-          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
-        ],
+        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
         "timeout": 30000
       },
       {
@@ -91,9 +82,7 @@
         "name": "Mobile Chrome",
         "testDir": "/Users/michaelwilkins/Documents/GitHub/nextjs-playground/e2e",
         "testIgnore": [],
-        "testMatch": [
-          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
-        ],
+        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
         "timeout": 30000
       },
       {
@@ -107,9 +96,7 @@
         "name": "Mobile Safari",
         "testDir": "/Users/michaelwilkins/Documents/GitHub/nextjs-playground/e2e",
         "testIgnore": [],
-        "testMatch": [
-          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
-        ],
+        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
         "timeout": 30000
       }
     ],

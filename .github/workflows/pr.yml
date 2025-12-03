@@ -161,5 +161,4 @@ jobs:
         uses: daun/playwright-report-summary@v3
         with:
           report-file: test-results/report.json
-          comment-title: 'Playwright E2E Test Results'
-
+          comment-title: "Playwright E2E Test Results"
